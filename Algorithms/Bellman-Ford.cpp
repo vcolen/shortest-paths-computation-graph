@@ -1,105 +1,84 @@
 #include <iostream>
 #include <climits>
+#include <vector>
 
 using namespace std;
 
-// A structure to represent a weighted edge in the graph
-struct Edge {
-    int src, dest, weight;
+class Graph
+{
+    int numberOfVertices;
+    vector<vector<int>> adjacencyMatrix;
+
+public:
+    Graph(int vertices);
+
+    // Função para adicionar uma aresta entre os dois vértices
+    void addEdge(int source, int destination, int weight);
+
+    // Algoritmo Bellman-Ford para achar o menor caminho
+    void bellmanFord(int source);
 };
 
-// A structure to represent a connected, directed, and weighted graph
-struct Graph {
-    int V, E;
-    Edge* edge;
-};
-
-// Creates a graph with V vertices and E edges
-Graph* createGraph(int V, int E) {
-    Graph* graph = new Graph;
-    graph->V = V;
-    graph->E = E;
-    graph->edge = new Edge[E];
-    return graph;
+Graph::Graph(int vertices) : numberOfVertices(vertices)
+{
+    // Inicializando a matriz de adjacência com todas as arestas valendo infinito
+    adjacencyMatrix.resize(numberOfVertices, vector<int>(numberOfVertices, INT_MAX));
 }
 
-// A utility function used to print the solution
-void printArr(int dist[], int n) {
-    printf("Vertex Distance from Source\n");
-    for (int i = 0; i < n; ++i)
-        printf("%d \t\t %d\n", i, dist[i]);
+void Graph::addEdge(int source, int destination, int weight)
+{
+    // O grafo é NÃO-DIRECIONADO, portando arestas em ambas as direções
+    adjacencyMatrix[source][destination] = weight;
+    adjacencyMatrix[destination][source] = weight;
 }
 
-// The main function that finds shortest distances from src
-// to all other vertices using Bellman-Ford algorithm.
-// The function also detects negative weight cycles
-void BellmanFord(Graph* graph, int src) {
-    int V = graph->V;
-    int E = graph->E;
-    int* dist = new int[V];
+void Graph::bellmanFord(int source)
+{
+    // Inicializando o vetor de distâncias com todas as distâncias valendo infinito
+    vector<int> distance(numberOfVertices, INT_MAX);
+    distance[source] = 0;
 
-    // Step 1: Initialize distances from src to all other
-    // vertices as INFINITE
-    for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX;
-    dist[src] = 0;
-
-    // Step 2: Relax all edges |V| - 1 times. A simple
-    // shortest path from src to any other vertex can have
-    // at most |V| - 1 edges
-    for (int i = 1; i <= V - 1; i++) {
-        for (int j = 0; j < E; j++) {
-            int u = graph->edge[j].src;
-            int v = graph->edge[j].dest;
-            int weight = graph->edge[j].weight;
-            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
-                dist[v] = dist[u] + weight;
+    // Relaxando as arestas V-1 vezes
+    for (int i = 1; i < numberOfVertices; ++i)
+    {
+        for (int u = 0; u < numberOfVertices; ++u)
+        {
+            for (int v = 0; v < numberOfVertices; ++v)
+            {
+                // Relaxação: Atualiza a distância se um caminho mais curto for encontrado
+                if (adjacencyMatrix[u][v] != INT_MAX &&
+                    distance[u] != INT_MAX &&
+                    distance[u] + adjacencyMatrix[u][v] < distance[v])
+                {
+                    distance[v] = distance[u] + adjacencyMatrix[u][v];
+                }
+            }
         }
     }
 
-    // Step 3: check for negative-weight cycles.
-    // The above step guarantees shortest distances
-    // if the graph doesn't contain a negative weight cycle.
-    // If we get a shorter path, then there is a cycle.
-    for (int i = 0; i < E; i++) {
-        int u = graph->edge[i].src;
-        int v = graph->edge[i].dest;
-        int weight = graph->edge[i].weight;
-        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            printf("Graph contains a negative weight cycle");
-            delete[] dist;
-            return; // If a negative cycle is detected, simply return
-        }
+    // Não iremos checar ciclos negativos pois estamos lidando somente
+    // com arestas de peso positivo
+
+    cout << "Distâncias mais curtas a partir do vértice de origem " << source << " são:" << endl;
+    for (int i = 0; i < numberOfVertices; ++i)
+    {
+        cout << "Para o vértice " << i << ": " << distance[i] << endl;
     }
-
-    printArr(dist, V);
-
-    delete[] dist;
-    return;
 }
 
-// Driver's code
-int main() {
-    // Let us create the graph given in the above example
-    int V = 5; // Number of vertices in the graph
-    int E = 8; // Number of edges in the graph
-    Graph* graph = createGraph(V, E);
+int main()
+{
+    Graph graph(5);
 
-    // Add edges to the graph
-    graph->edge[0] = {0, 1, -1};
-    graph->edge[1] = {0, 2, 4};
-    graph->edge[2] = {1, 2, 3};
-    graph->edge[3] = {1, 3, 2};
-    graph->edge[4] = {1, 4, 2};
-    graph->edge[5] = {3, 2, 5};
-    graph->edge[6] = {3, 1, 1};
-    graph->edge[7] = {4, 3, -3};
+    graph.addEdge(0, 1, 1);
+    graph.addEdge(0, 2, 4);
+    graph.addEdge(1, 2, 2);
+    graph.addEdge(1, 3, 5);
+    graph.addEdge(2, 3, 1);
+    graph.addEdge(2, 4, 3);
+    graph.addEdge(3, 4, 7);
 
-    // Function call
-    BellmanFord(graph, 0);
-
-    delete[] graph->edge;
-    delete graph;
+    graph.bellmanFord(0);
 
     return 0;
 }
