@@ -75,7 +75,7 @@ public:
                 }
         }
 
-        printSolution(distances);
+        //printSolution(distances);
     }
 
     // int main()

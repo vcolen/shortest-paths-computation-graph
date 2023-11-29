@@ -38,16 +38,6 @@ public:
         return graph;
     }
 
-    // Função para medir o tempo de execução de um algoritmo
-    double measureTime(void (*func)(const vector<vector<int>> &), const vector<vector<int>> &graph)
-    {
-        clock_t start = clock();
-        func(graph);
-        clock_t end = clock();
-        double duration = double(end - start) / CLOCKS_PER_SEC;
-        return duration;
-    }
-
     // Função para imprimir a matriz de adjacência do grafo
     void printGraph(const vector<vector<int>> &graph)
     {

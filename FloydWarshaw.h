@@ -13,7 +13,7 @@
 class FloydWarshaw {
 
     public:
-        void floydWarshall(vector<vector<int>> graph) {
+        void floydWarshaw(vector<vector<int>> graph) {
             int verticesCount = graph.size();
             for (int k = 0; k < verticesCount; k++) {
                 for (int i = 0; i < verticesCount; i++) {
@@ -24,7 +24,7 @@ class FloydWarshaw {
                     }
                 }
             }
-            printSolution(graph);
+            //printSolution(graph);
         }
 
         void printSolution(vector<vector<int>> graph) {
