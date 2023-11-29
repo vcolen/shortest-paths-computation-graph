@@ -11,7 +11,6 @@ class BellmanFord
 {
 
 public:
-
     const int verticesCount;
 
     BellmanFord(int count) : verticesCount(count) {}
@@ -23,7 +22,7 @@ public:
             cout << i << " \t\t\t\t" << distances[i] << endl;
     }
 
-    void bellmanFord(vector<vector<int>>& graph, int source)
+    void bellmanFord(vector<vector<int>> &graph, int source)
     {
         int verticesCount = graph.size();
 
@@ -32,7 +31,7 @@ public:
         // Inicializa as distâncias como infinito e a fonte como 0
         for (int i = 0; i < verticesCount; i++)
             distances[i] = INT_MAX;
-            distances[source] = 0;
+        distances[source] = 0;
 
         // Relaxa todas as arestas |V| - 1 vezes
         for (int count = 0; count < verticesCount - 1; count++)
@@ -62,8 +61,6 @@ public:
                 }
             }
         }
-
-       // printSolution(distances);
     }
 };
 #endif
