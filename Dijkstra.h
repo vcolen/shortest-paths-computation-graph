@@ -40,6 +40,7 @@ public:
     void dijkstra(vector<vector<int>>& graph, int source)
     {
         int verticesCount = graph.size();
+
         int distances[verticesCount]; // Contém as distâncias da fonte para os outros vértices
         bool shortestPathTreeSet[verticesCount];
 
