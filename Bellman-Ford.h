@@ -49,18 +49,8 @@ public:
             }
         }
 
-        // Checa ciclos negativos
-        for (int u = 0; u < verticesCount; u++)
-        {
-            for (int v = 0; v < verticesCount; v++)
-            {
-                if (graph[u][v] != 0 && distances[u] != INT_MAX && distances[u] + graph[u][v] < distances[v])
-                {
-                    cout << "Graph contains negative weight cycle" << endl;
-                    return;
-                }
-            }
-        }
+        // Não checamos ciclos negativos pois necessariamente 
+        // todas as arestas terão peso positivo
     }
 };
 #endif

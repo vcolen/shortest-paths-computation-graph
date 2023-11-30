@@ -85,7 +85,7 @@ int main()
     GraphGenerator graphGenerator = GraphGenerator();
 
     int y = 1; // Graph Counter
-    for (int x = 1; x <= 2; ++x)
+    for (int x = 1; x <= 5; ++x)
     {
         int vertices = pow(5, x);
 
@@ -110,34 +110,34 @@ int main()
             clock_t end = clock();
             double duration = double(end - start) / CLOCKS_PER_SEC;
 
-            // graphToCSV(graph, "Graphs/Graph_" + to_string(y) + ".csv");
+           // graphToCSV(graph, "Graphs/Graph_" + to_string(y) + ".csv");
 
             cout << "Grafo " + to_string(y) << ", Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
             cout << "Vertices: " << vertices << ", Arestas: " << edges << endl
                  << endl;
             y++;
 
-            // Dijkstra dijkstra = Dijkstra();
-            // clock_t start = clock();
-            // dijkstra.dijkstra(graph, 0);
-            // clock_t end = clock();
-            // double duration = double(end - start) / CLOCKS_PER_SEC;
-            // cout << "Dijkstra, "<< ", Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
+            Dijkstra dijkstra = Dijkstra();
+            start = clock();
+            dijkstra.dijkstra(graph, 0);
+            end = clock();
+            duration = double(end - start) / CLOCKS_PER_SEC;
+            cout << "Dijkstra, "<< "Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
 
-            // BellmanFord bellmanFord = BellmanFord(graph.size());
-            // start = clock();
-            // bellmanFord.bellmanFord(graph, 0);
-            // end = clock();
-            // duration = double(end - start) / CLOCKS_PER_SEC;
-            // cout << "Bellman-Ford, "<< ", Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
+            BellmanFord bellmanFord = BellmanFord(graph.size());
+            start = clock();
+            bellmanFord.bellmanFord(graph, 0);
+            end = clock();
+            duration = double(end - start) / CLOCKS_PER_SEC;
+            cout << "Bellman-Ford, "<< "Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
 
-            // FloydWarshaw floydWarshaw = FloydWarshaw();
-            // start = clock();
-            // floydWarshaw.floydWarshaw(graph);
-            // end = clock();
-            // duration = double(end - start) / CLOCKS_PER_SEC;
-            // cout << "Floyd Warshaw," << " Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
-            // cout << endl;
+            FloydWarshaw floydWarshaw = FloydWarshaw();
+            start = clock();
+            floydWarshaw.floydWarshaw(graph);
+            end = clock();
+            duration = double(end - start) / CLOCKS_PER_SEC;
+            cout << "Floyd Warshaw," << " Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
+            cout << endl;
 
             // Johnson johnson = Johnson();
             // start = clock();
@@ -151,8 +151,7 @@ int main()
             // opf.opf(graph, 0);
             // end = clock();
             // duration = double(end - start) / CLOCKS_PER_SEC;
-            // cout << "OPF,"
-            //      << " Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
+            // cout << "OPF," << " Tempo: " << duration << " segundos ou " << double(end - start) << "ms" << endl;
             // cout << endl;
         }
     }
