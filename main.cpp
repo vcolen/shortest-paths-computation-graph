@@ -22,14 +22,12 @@ bool fileExists(const string &filename)
 
 void graphToCSV(const vector<vector<int>> &graph, const string &filename)
 {
-    // Check if the file already exists
     if (fileExists(filename))
     {
         cerr << "File already exists: " << filename << endl;
         return;
     }
 
-    // Create a new file
     ofstream file(filename);
 
     if (!file.is_open())
@@ -80,13 +78,12 @@ vector<vector<int>> ReadCSV(const string &filename)
     }
     else
     {
-        cerr << "Error: Unable to open file " << filename << endl;
+        cerr << "Error: Não foi possível abrir o arquivo " << filename << endl;
     }
 
     return graph;
 }
 
-// Generic function to measure the execution time of a graph algorithm
 template <typename GraphAlgorithm>
 void measureAlgorithmTime(GraphAlgorithm &algorithm, vector<vector<int>> &graph)
 {
@@ -106,7 +103,7 @@ int main()
 {
     GraphGenerator graphGenerator = GraphGenerator();
 
-    int y = 1; // Graph Counter
+    int y = 1; // Contador de grafos
     for (int x = 1; x <= 5; ++x)
     {
         int vertices = pow(5, x);
@@ -146,11 +143,11 @@ int main()
             FloydWarshaw floydWarshaw;
             measureAlgorithmTime(floydWarshaw, graph);
 
-            OPF opf;
-            measureAlgorithmTime(opf, graph);
-
             Johnson johnson;
             measureAlgorithmTime(johnson, graph);
+
+            OPF opf;
+            measureAlgorithmTime(opf, graph);
             cout << endl;
         }
     }

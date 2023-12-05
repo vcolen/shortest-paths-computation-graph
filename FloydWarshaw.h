@@ -10,7 +10,7 @@ class FloydWarshaw
 
 public:
     const int INF = INT_MAX;
-    void floydWarshaw(vector<vector<int>> &graph)
+    void floydWarshaw(vector<vector<int>> graph)
     {
         int verticesCount = graph.size();
         for (int k = 0; k < verticesCount; k++)
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    void operator()(vector<vector<int>> &graph)
+    void operator()(vector<vector<int>> graph)
     {
         floydWarshaw(graph);
     }
