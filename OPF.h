@@ -5,30 +5,22 @@
 #include <limits.h>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
 class OPF
 {
 public:
-    const int INF = numeric_limits<int>::max();
-
-    void printSolution(const vector<int> &distances)
-    {
-        cout << "Vertex \t Distance from source" << endl;
-        for (int i = 0; i < distances.size(); ++i)
-            cout << i << " \t\t\t\t" << distances[i] << endl;
-    }
-
-    void opf(vector<vector<int>> &graph, int source)
+    void opf(vector<vector<int>> &graph)
     {
         int verticesCount = graph.size();
 
-        vector<int> distances(verticesCount, INFINITY);
-        distances[source] = 0;
+        vector<int> distances(verticesCount, numeric_limits<int>::max());
+        distances[0] = 0;
 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, source});
+        pq.push({0, 0});
 
         while (!pq.empty())
         {
@@ -43,6 +35,7 @@ public:
             {
                 if (graph[u][v] != 0)
                 {
+                    // Ao invés de somar as distâncias, dessa vez pegamos a maior delas
                     int newDist = max(distances[u], graph[u][v]);
                     if (newDist < distances[v])
                     {
@@ -52,8 +45,10 @@ public:
                 }
             }
         }
+    }
 
-        printSolution(distances);
+    void operator()(vector<vector<int>>& graph) {
+        opf(graph);
     }
 };
 

@@ -28,22 +28,9 @@ public:
         }
     }
 
-    void printSolution(vector<vector<int>> graph)
+    void operator()(vector<vector<int>> &graph)
     {
-        int verticesCount = graph.size();
-        std::cout << "The following matrix shows the shortest distances between every pair of vertices:\n";
-        for (int i = 0; i < verticesCount; i++)
-        {
-            for (int j = 0; j < verticesCount; j++)
-            {
-                if (graph[i][j] == INF)
-                    std::cout << "INF "
-                              << " ";
-                else
-                    std::cout << graph[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
+        floydWarshaw(graph);
     }
 };
 

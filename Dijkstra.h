@@ -11,24 +11,15 @@ using namespace std;
 class Dijkstra
 {
 public:
-    const int INF = numeric_limits<int>::max();
-
-    void printSolution(const vector<int> &distances)
-    {
-        cout << "Vertex \t Distance from source" << endl;
-        for (int i = 0; i < distances.size(); ++i)
-            cout << i << " \t\t\t\t" << distances[i] << endl;
-    }
-
-    void dijkstra(vector<vector<int>> &graph, int source)
+    void dijkstra(vector<vector<int>> &graph)
     {
         int verticesCount = graph.size();
 
-        vector<int> distances(verticesCount, INF);
-        distances[source] = 0;
+        vector<int> distances(verticesCount, numeric_limits<int>::max());
+        distances[0] = 0;
 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, source});
+        pq.push({0, 0});
 
         while (!pq.empty())
         {
@@ -52,6 +43,10 @@ public:
                 }
             }
         }
+    }
+
+    void operator()(vector<vector<int>>& graph) {
+        dijkstra(graph);
     }
 };
 
